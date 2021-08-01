@@ -23,7 +23,7 @@ def display_images(my_images):
 
 
 def provide_info(data_path):
-    box = os.listdir(f"{main_path}/MODIS Data/MODIS_LE_US_{data_path}")
+    box = os.listdir(data_path)
 
     potato = [date[23:27] for date in box]
     yr_list = list(set(potato))
@@ -64,7 +64,7 @@ def provide_info(data_path):
     return data
 
 
-data = provide_info(sub_paths[0])
+data = provide_info(f"{main_path}/MODIS Data/MODIS_LE_US_{data_path}")
 
 
 display_images(data)

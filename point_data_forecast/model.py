@@ -46,9 +46,6 @@ df = pd.read_excel(f"{main_path}/New_NLDAS/{file_path}.xlsx", sheet)
 df = df.set_index("Date")
 data = normalize(df)
 
-df
-
-data
 
 data.isnull().values.any()
 
@@ -94,11 +91,6 @@ for feature in data:
 x_train = np.concatenate(x_train, axis=2)
 x_test = np.concatenate(x_test, axis=2)
 
-print(x_train.shape)
-print(x_test.shape)
-print(y_train.shape)
-print(y_test.shape)
-
 
 def network(vector_dim, cast):
     input = Input(shape=vector_dim)
@@ -121,14 +113,8 @@ def network(vector_dim, cast):
     return model
 
 
-load_saved = False
+model = network((x_train.shape[1], x_train.shape[2]), y_train.shape[1])
 
-if load_saved:
-    model = tf.keras.models.load_model(f"{main_path}/models/checkpoint_{file_path}")
-else:
-    model = network((x_train.shape[1], x_train.shape[2]), y_train.shape[1])
-
-model.summary()
 
 checkpoint = ModelCheckpoint(
     filepath=f"{main_path}/models/checkpoint_{file_path}/", monitor="loss", save_best_only=True, save_freq="epoch"
@@ -157,10 +143,3 @@ preds = model.predict(x)
 
 formated_pred = pd.DataFrame(preds, columns=[f"{i + 1} day forecast" for i in range(preds.shape[1])])
 formated_pred.to_excel(f"{main_path}/linear results raw/predictions_multivar_raw_{file_path}.xlsx")
-
-ytrue = np.concatenate((y_train, y_test))
-
-print(y_train.shape)
-print(ytrue.shape)
-
-print("\n-----------------------------------------------End of process-----------------------------------------------")

@@ -2,8 +2,6 @@ import matplotlib
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# Commented out IPython magic to ensure Python compatibility.
-# %matplotlib inline
 
 main_path = "/content/gdrive/My Drive/Projects/EV Projection LSTM"
 
